@@ -15,11 +15,10 @@
                 if ($("#searchData").val() == "") {
                     alert("You must enter one or more tags!");
                 } else {
-                    searchTag = $("#searchData").val();                  
-
-                        var url = "https://www.flickr.com/services/feeds/photos_public.gne?" +
+                    searchTag = $("#searchData").val();   
+                    var url = "https://www.flickr.com/services/feeds/photos_public.gne?" +
                         "format=json&jsoncallback=?&tags=" + searchTag + "&tagmode=all";
-
+                        
                     $.getJSON(url, function (data) {
                         var html = "";
                         $.each(data.items, function (i, item) {
