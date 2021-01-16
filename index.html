@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flickr Search</title>
+    <link rel="stylesheet" href="main.css">
+    <script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var searchTag;
+            $("#searchButton").click(function () {
+                searchTag = "";
+                if ($("#searchData").val() == "") {
+                    alert("You must enter one or more tags!");
+                } else {
+                    searchTag = $("#searchData").val();
+
+                   // var url = "http://api.flickr.com/services/feeds/photos_pulbic.gne?" +
+                   //     "format=json&jsoncallback=?&tags=" + searchTag + "&tagmode=all";
+
+                        var url = "https://www.flickr.com/services/feeds/photos_public.gne?" +
+                        "format=json&jsoncallback=?&tags=" + searchTag + "&tagmode=all";
+
+                    $.getJSON(url, function (data) {
+                        var html = "";
+                        $.each(data.items, function (i, item) {
+                            html+="<h2>"+item.title+"</h2>";
+                            html+="<img src="+item.media.m+">";
+                            html+="<p><b>Tags: </b>" + item.tags + "</p>";
+
+                        });
+                        $("#results").html(html);
+                    });
+
+                }
+
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <label for="searchData">Search by tags:</label>
+    <input type="text" name="searchData" size="30" id="searchData">
+    <input type="button" value="Search" id="searchButton">
+    <h1>Flickr Results</h1>
+    <div id="results"></div>
+</body>
+
+</html>
